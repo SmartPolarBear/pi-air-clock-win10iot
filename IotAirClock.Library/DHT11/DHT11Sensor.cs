@@ -82,6 +82,7 @@ namespace IotAirClock.DHT11
         private const int SAMPLE_HOLD_LOW_MILLIS = 18;
         private GpioPinDriveMode inputDirveMode;
         private GpioPin pin;
+        private DHT11Data lastData;
 
         public DHT11Sensor(int pinNumber)
         {
@@ -93,7 +94,7 @@ namespace IotAirClock.DHT11
 
             try
             {
-                pin = gpio.OpenPin(pinNumber);
+                pin = gpio.OpenPin(pinNumber, GpioSharingMode.Exclusive);
             }
             catch (Exception)
             {
@@ -101,8 +102,7 @@ namespace IotAirClock.DHT11
                 throw;
             }
 
-            inputDirveMode = pin.IsDriveModeSupported(GpioPinDriveMode.InputPullUp) ?
-                 GpioPinDriveMode.InputPullUp : GpioPinDriveMode.Input;
+            inputDirveMode = GpioPinDriveMode.Input;
 
             pin.SetDriveMode(inputDirveMode);
         }
@@ -119,7 +119,7 @@ namespace IotAirClock.DHT11
 
             var prevValue = pin.Read();
 
-            long initialRisingEdgeTimeoutMillis = 10000L;
+            const long initialRisingEdgeTimeoutMillis = 50000L;
             long endTicCount = DateTime.Now.Ticks + initialRisingEdgeTimeoutMillis;
 
             for (; ; )
@@ -142,7 +142,7 @@ namespace IotAirClock.DHT11
             }
 
             long prevTime = 0;
-            long sampleTimeoutMillis = 100000L;
+            const long sampleTimeoutMillis = 105000L;
             endTicCount = DateTime.Now.Ticks + sampleTimeoutMillis;
 
             Stopwatch stopwatch = new Stopwatch();
@@ -177,13 +177,19 @@ namespace IotAirClock.DHT11
         public int Read(out DHT11Data data)
         {
             data = new DHT11Data();
-
-            int ret = 0;
             int retry = 0;
+            int ret = 0;
             do
             {
                 ret = Read(data);
-            } while (ret != 0 && (++retry) < 20);
+            } while (ret != 0 && (++retry) < 25);
+
+            if (ret != 0 && lastData != null) data = lastData;
+            else
+            {
+                lastData = data;
+                Debug.WriteLine("Succeed read!");
+            }
 
             return ret;
         }
