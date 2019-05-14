@@ -64,12 +64,13 @@ namespace IotAirClock._18D20
             try
             {
                 writer = new DataWriter(port.OutputStream);
-                writer.WriteByte(0xF0);
+                writer.WriteByte(0XF0);
                 await writer.StoreAsync();
 
                 reader = new DataReader(port.InputStream);
-                await reader.LoadAsync(1);
-                ret = reader.ReadByte();
+                //port.InputStream.ReadAsync
+                //await reader.LoadAsync(1);
+                //ret = reader.ReadByte();
             }
             catch (Exception)
             {
