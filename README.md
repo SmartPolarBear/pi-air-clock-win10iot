@@ -9,6 +9,7 @@ A clock displaying temprature, humidity, etc built with Raspberry Pi 3B+, LCD160
 >Easily build it by press F5 in Visual Studio if all the prerequisites are met.
 
 ## Acknowledgement
-This project can't be functional without the project:
-[psychoria/DHT11sample](https://github.com/psychoria/DHT11sample)
-The LCD1602 driver is rewrite to C# from its original C++ version based on the inspiration from [Drive an LCD 16x2 display with Raspberry Pi](https://www.mbtechworks.com/projects/drive-an-lcd-16x2-display-with-raspberry-pi.html)
+1. This project can't be functional without the project:
+[psychoria/DHT11sample](https://github.com/psychoria/DHT11sample)  
+
+2. The LCD1602 driver is rewrite to C# from its original C++ version based on the inspiration from [Drive an LCD 16x2 display with Raspberry Pi](https://www.mbtechworks.com/projects/drive-an-lcd-16x2-display-with-raspberry-pi.html)  
