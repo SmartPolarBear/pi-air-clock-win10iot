@@ -1,4 +1,4 @@
-# Snake with Unity 2D
+# A Humidity & Temperature Clock-styled Monitor 
 
 A clock displaying temprature, humidity, etc built with Raspberry Pi 3B+, LCD1602 and DHT11 runs on Windows 10 IoT. The original C++ version repository is [SmartPolarBear/pi-my-air-clock](https://github.com/SmartPolarBear/pi-my-air-clock)
 ## Getting Started
